@@ -21,8 +21,8 @@
   <body>
     <!-- NAvBAR -->
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Ecommerce</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+
       <button
         class="navbar-toggler"
         type="button"
@@ -34,23 +34,135 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+      <a class="navbar-brand" href="#">Navbar</a>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">
-              Home <span class="sr-only">(current)</span>
-            </a>
+            <a class="nav-link" href="#"
+              >Home <span class="sr-only">(current)</span></a
+            >
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li>
         </ul>
+
+        </div>
+
+        <div class="cart-btn">
+          <span class="nav-icon"> <i class="fas fa-cart-plus"></i> </span>
+          <div class="cart-items">0</div>
+        </div>
       </div>
     </nav>
+
+    <!-- Headder / landingPage -->
+
+    <header>
+
+
+    </header>
+
+  
+<section class="products">
+
+
+        <div class="section-title">
+
+          <h2>Our Products</h2>
+
+        </div>
+
+
+  <div class="products-center">
+
+      <!-- Single Product -->
+
+          <article class="product">
+
+              <div  class="img-container">
+
+              <img src="./images/product-1.jpeg"  alt="Product1" class="product-img">
+    
+              <button class="bag-btn" data-id="1"> <i class="fas fa-shopping-cart">Add To Bag</i> </button>
+    
+              </div>
+
+              <h3>BEd</h3>
+              <h4>$234</h4>
+
+          </article> 
+      
+          <article class="product">
+
+              <div  class="img-container">
+
+              <img src="./images/product-1.jpeg"  alt="Product1" class="product-img">
+    
+              <button class="bag-btn" data-id="1"> <i class="fas fa-shopping-cart">Add To Bag</i> </button>
+    
+              </div>
+
+              <h3>BEd</h3>
+              <h4>$234</h4>
+
+          </article> 
+      
+     </div>
+
+
+        
+</section>
+
+
+<!-- cart -->
+<div class="cart-overlay">
+
+  <div class="cart">
+
+    <span class="close-cart">
+       <i class="fas fa-window-close"></i>
+    </span>
+    <h2>Your Cart</h2>
+    <div class="cart-content">
+
+      <!-- Cart Item -->
+
+      <div class="cart-item">
+
+          <img src="./images/product-1.jpeg" alt="product">
+
+          <div>
+            <h4>BEd</h4>
+            <h5>$234</h5>
+            <span class="remove-item">Remove</span>
+          </div>
+
+          <div>
+            <i class="fas fa-chevron-up"></i>
+            <p class="item-amount">1</p>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+      </div> 
+       <!-- ENd Cart Item -->
+    </div>
+
+    <div class="cart-footer">
+
+      <h3>your total : $ <span class="cart-total">0</span> </h3>
+        <button class="clear-cart banner-btn">Clear Cart</button>
+    </div>
+
+</div>
+<!-- End of cart -->
+  
+
 
     <script src="./js/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
+
+
