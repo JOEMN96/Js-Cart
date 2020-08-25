@@ -1,142 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-Commerce</title>
-    <!-- Bootstrap StyleSheet -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <!-- FontAwesome -->
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-      crossorigin="anonymous"
-    />
 
-    <!-- <link rel="stylesheet" href="main.css" /> -->
-    <!-- Cutom StyleSheet -->
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <!-- NAvBAR -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Commerce</title>
+  <!-- Bootstrap StyleSheet -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <!-- <link rel="stylesheet" href="main.css" /> -->
+  <!-- Cutom StyleSheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
 
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#">Navbar</a>
+<body>
+  <!-- NAvBAR -->
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >Home <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-        </ul>
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
 
-        </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Navbar</a>
 
-        <div class="cart-btn">
-          <span class="nav-icon"> <i class="fas fa-cart-plus"></i> </span>
-          <div class="cart-items">0</div>
-        </div>
-      </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+      </ul>
 
-    <!-- Headder / landingPage -->
+    </div>
 
-    <header>
+    <div class="cart-btn">
+      <span class="nav-icon"> <i class="fas fa-cart-plus"></i> </span>
+      <div class="cart-items">0</div>
+    </div>
+    </div>
+  </nav>
+
+  <!-- Headder / landingPage -->
+
+  <header>
 
 
-    </header>
-
-  
-<section class="products">
+  </header>
 
 
-        <div class="section-title">
-
-          <h2>Our Products</h2>
-
-        </div>
+  <section class="products">
 
 
-  <div class="products-center">
+    <div class="section-title">
+
+      <h2>Our Products</h2>
+
+    </div>
+
+
+    <div class="products-center">
 
       <!-- Single Product -->
 
-   
-      
- 
-      
-     </div>
 
 
-        
-</section>
 
 
-<!-- cart -->
-<div class="cart-overlay">
-
-  <div class="cart">
-
-    <span class="close-cart">
-       <i class="fas fa-window-close"></i>
-    </span>
-    <h2>Your Cart</h2>
-    <div class="cart-content">
-
-      <!-- Cart Item -->
-
-      <div class="cart-item">
-
-          <img src="./images/product-1.jpeg" alt="product">
-
-          <div>
-            <h4>BEd</h4>
-            <h5>$234</h5>
-            <span class="remove-item">Remove</span>
-          </div>
-
-          <div>
-            <i class="fas fa-chevron-up"></i>
-            <p class="item-amount">1</p>
-            <i class="fas fa-chevron-down"></i>
-          </div>
-      </div> 
-       <!-- ENd Cart Item -->
     </div>
 
-    <div class="cart-footer">
 
-      <h3>your total : $ <span class="cart-total">0</span> </h3>
+
+  </section>
+
+
+  <!-- cart -->
+  <div class="cart-overlay">
+
+    <div class="cart">
+
+      <span class="close-cart">
+        <i class="fas fa-window-close"></i>
+      </span>
+      <h2>Your Cart</h2>
+      <div class="cart-content">
+
+        <!-- Dynamically generating From Server -->
+
+      </div>
+
+      <div class="cart-footer">
+
+        <h3>your total : $ <span class="cart-total">0</span> </h3>
         <button class="clear-cart banner-btn">Clear Cart</button>
-    </div>
+      </div>
 
-</div>
-<!-- End of cart -->
-  
+    </div>
+    <!-- End of cart -->
+
 
 
     <script src="./js/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="app.js"></script>
-  </body>
+</body>
+
 </html>
-
-
