@@ -55,7 +55,7 @@ class UI {
             <article class="product">
             <div  class="img-container">
             <img src="${product.image}"  alt="Product1" class="product-img">
-            <button class="bag-btn" data-id="${product.id}"> <i class="fas fa-shopping-cart"></i>Add To Bag </button>
+            <button class="bag-btn" data-id="${product.id}"> <i class="fas fa-shopping-cart"></i>Add To Cart </button>
             </div>
             <h3>${product.title}</h3>
             <h4>$${product.price}</h4>
@@ -70,17 +70,16 @@ class UI {
   getbagBtn() {
     const bagBtns = [...document.querySelectorAll(".bag-btn")];
     buttonsDOM = bagBtns;
-    bagBtns.forEach(btn => {
+    bagBtns.forEach((btn) => {
       let id = btn.dataset.id;
-      let incart = cart.find(item => item.id === id); // Future use
+      let incart = cart.find((item) => item.id === id); // Future use
       if (incart) {
-
         btn.innerText = "InCart";
         btn.disabled = true;
       }
 
-      btn.addEventListener('click', e => {
-        e.target.innerText = " InCart"      // adding clicking funcnality to cart
+      btn.addEventListener("click", (e) => {
+        e.target.innerText = " InCart"; // adding clicking funcnality to cart
         e.target.disabled = true;
         // Getting Product from local storage
         let cartItem = { ...Storage.getProducts(id), amount: 1 };
@@ -92,8 +91,10 @@ class UI {
         this.setCartValues(cart);
         // Update Ui of Actual CART
         this.updateCart(cartItem);
-      })
-    })
+        // Show cart
+        this.showCart();
+      });
+    });
   }
 
   setCartValues(cart) {
@@ -101,35 +102,101 @@ class UI {
     let cartVal = 0;
 
     cart.map((item) => {
-
       priceTotal += item.price * item.amount;
       cartVal += item.amount;
-    })
+    });
 
     cartTotal.innerText = parseFloat(priceTotal.toFixed(2));
     cartItems.innerText = cartVal;
   }
 
   updateCart(cart) {
-    let div = document.createElement('div');
-    div.classList.add('cart-item');
-    div.innerHTML = `
-            <img src="${cart.image}">
-            <div>
-              <h4>${cart.title}</h4>
-              <h5>$${cart.price}</h5>
-              <span class="remove-item" data-id="${cart.id}">Remove</span>
-            </div>
-            <div>
-              <i class="fas fa-chevron-up" data-id="${cart.id}></i>
-              <p class="item-amount">${cart.amount}</p>
-              <i class="fas fa-chevron-down">data-id="${cart.id}</i>
-            </div> `;
+    let div = document.createElement("div");
+    div.classList.add("cart-item");
+
+    div.innerHTML = `   <img src="${cart.image}">
+                        <div>
+                          <h4>${cart.title}</h4>
+                          <h5>$${cart.price}</h5>
+                          <span class="remove-item" data-id="${cart.id}">Remove</span>
+                        </div>
+                        <div>
+                          <i class="fas fa-chevron-up" data-id="${cart.id}"></i>
+                          <p class="item-amount">${cart.amount}</p>
+                          <i class="fas fa-chevron-down" data-id="${cart.id}"></i>
+                        </div> `;
 
     cartContent.appendChild(div);
-    console.log(cartContent);
   }
 
+  showCart() {
+    cartOverlay.classList.add("transparentBcg");
+    cartDOM.classList.add("showCart");
+  }
+
+  hideCart() {
+    cartOverlay.classList.remove("transparentBcg");
+    cartDOM.classList.remove("showCart");
+  }
+
+  // Dom load agrapo cart valu ah set panara method 👇🏻
+  appSetup() {
+    // getting cart values from local storage
+    cart = Storage.getCart();
+    // setting up the cart total (antha chinna cart icon la iruka value)
+    this.setCartValues(cart);
+    // Populating the cart
+    this.populateCart(cart);
+
+    // cart action for open & close button ⬇
+    cartBtn.addEventListener("click", () => {
+      this.showCart();
+    });
+
+    closeCartBtn.addEventListener("click", () => {
+      this.hideCart();
+    });
+  }
+
+  populateCart(cart) {
+    cart.forEach((cartItem) => {
+      this.updateCart(cartItem);
+    });
+  }
+
+  operationsInCart() {
+    // clearing cart by pressing clear cart btn
+    clearCartBtn.addEventListener("click", () => {
+      this.clearCart();
+    });
+  }
+  // removing item from cart
+  clearCart() {
+    let cartItems = cart.map((item) => item.id);
+    cartItems.forEach((eachid) => this.removeItem(eachid));
+    // removing item from cart ui
+    while (cartContent.children.length > 0) {
+      cartContent.removeChild(cartContent.children[0]);
+    }
+
+    this.hideCart();
+  }
+
+  removeItem(id) {
+    cart = cart.filter((item) => item.id !== id);
+    // update cart icon value
+    this.setCartValues(cart);
+    // updating storage
+    Storage.saveCart(cart);
+    // quering btns to change the  text when item is removed from cart
+    let btn = this.getSingleBtn(id);
+    btn.disabled = false;
+    btn.innerHTML = `<i class="fas fa-shopping-cart"></i>Add to Bag`;
+  }
+
+  getSingleBtn(id) {
+    return buttonsDOM.find((btn) => btn.dataset.id === id);
+  }
 }
 
 // Local storage
@@ -139,12 +206,17 @@ class Storage {
     localStorage.setItem("products", JSON.stringify(productArr)); // Saving product to Local Storage
   }
   static getProducts(id) {
-    let products = JSON.parse(localStorage.getItem('products'));
-    return products.find(products => products.id === id);
+    let products = JSON.parse(localStorage.getItem("products"));
+    return products.find((products) => products.id === id);
   }
 
   static saveCart(cart) {
-    localStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+  static getCart() {
+    return localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart"))
+      : [];
   }
 }
 
@@ -153,6 +225,11 @@ class Storage {
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const product = new Product();
+
+  // App Setup
+
+  ui.appSetup();
+
   //get all products
   product
     .getProducts()
@@ -162,5 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then(() => {
       ui.getbagBtn();
+      ui.operationsInCart();
     });
 });
