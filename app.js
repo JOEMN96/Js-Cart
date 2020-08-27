@@ -97,7 +97,7 @@ class UI {
     });
   }
 
-  setCartValues(cart) {
+  setCartValues(cart) {  // updating cart icon value & toal price inside the cart
     let priceTotal = 0;
     let cartVal = 0;
 
@@ -108,6 +108,8 @@ class UI {
 
     cartTotal.innerText = parseFloat(priceTotal.toFixed(2));
     cartItems.innerText = cartVal;
+
+    console.log(priceTotal);
   }
 
   updateCart(cart) {
@@ -169,7 +171,51 @@ class UI {
     clearCartBtn.addEventListener("click", () => {
       this.clearCart();
     });
+
+    // Manupulating individual item from the cart (⬆⬇ & REmove btns Functionality)
+
+    cartContent.addEventListener('click', (e) => {  // Event bubbling ah utilize panrom
+
+      if (e.target.classList.contains('remove-item')) {
+        // For remove btn in cart
+        let removeItem = e.target;
+        let id = removeItem.dataset.id;
+        removeItem.parentElement.parentElement;
+        cartContent.removeChild(removeItem.parentElement.parentElement);
+        this.removeItem(id);
+
+      } else if (e.target.classList.contains('fa-chevron-up')) {
+        // for increse values in cart
+        let updateItem = e.target;
+        let id = updateItem.dataset.id;
+        let temp = cart.find(item => item.id == id);
+        temp.amount = temp.amount + 1;
+        Storage.saveCart(cart);
+        this.setCartValues(cart);
+        updateItem.nextElementSibling.innerText = temp.amount;
+
+      } else if (e.target.classList.contains('fa-chevron-down')) {
+        // for decrese value from cart
+        let lowerAmountItem = e.target;
+        let id = lowerAmountItem.dataset.id;
+        let temp = cart.find(item => item.id == id); // local storage la irunthu data va edukurom
+        temp.amount = temp.amount - 1;
+        if (temp.amount > 0) {
+          Storage.saveCart(cart); // local storage ah update panrom
+          this.setCartValues(cart); // cart icon val ah set panrom
+          lowerAmountItem.previousElementSibling.innerText = temp.amount;
+        } else {
+          // value 0 ku kela pona cart Item ah remove panrom
+          cartContent.removeChild(lowerAmountItem.parentElement.parentElement)
+          this.removeItem(id);
+        }
+      }
+
+
+    })
+
   }
+
   // removing item from cart
   clearCart() {
     let cartItems = cart.map((item) => item.id);
@@ -195,7 +241,7 @@ class UI {
   }
 
   getSingleBtn(id) {
-    return buttonsDOM.find((btn) => btn.dataset.id === id);
+    return buttonsDOM.find((btn) => btn.dataset.id === id); // namma click pannna btn ah thedi edukurom
   }
 }
 
@@ -203,26 +249,25 @@ class UI {
 
 class Storage {
   static setLocalStorage(productArr) {
-    localStorage.setItem("products", JSON.stringify(productArr)); // Saving product to Local Storage
+    localStorage.setItem("products", JSON.stringify(productArr)); // Saving product to Local Storage (initial storage from server)
   }
   static getProducts(id) {
     let products = JSON.parse(localStorage.getItem("products"));
-    return products.find((products) => products.id === id);
+    return products.find((products) => products.id === id);  // getting a Specific product from storage using ID
   }
 
   static saveCart(cart) {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));  // updating cart value 
   }
   static getCart() {
-    return localStorage.getItem("cart")
-      ? JSON.parse(localStorage.getItem("cart"))
-      : [];
+    return localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
   }
 }
 
 // <----- Event Lisners --->
 
 document.addEventListener("DOMContentLoaded", () => {
+  // instances
   const ui = new UI();
   const product = new Product();
 
@@ -230,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ui.appSetup();
 
-  //get all products
+  //get all products for server
   product
     .getProducts()
     .then((products) => {
